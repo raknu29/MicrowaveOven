@@ -38,6 +38,7 @@ namespace MicrowaveOvenClasses.Controllers
         {
             isCooking = false;
             myPowerTube.TurnOff();
+            myTimer.Stop();
         }
 
         public void OnTimerExpired(object sender, EventArgs e)
