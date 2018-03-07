@@ -11,7 +11,7 @@
   <Filters>
     <ExcludeFilters>
       <FilterEntry>
-        <ModuleMask>MicrowaveOvenClasses </ModuleMask>
+        <ModuleMask>MicrowaveOvenClasses</ModuleMask>
         <ClassMask>MicrowaveOvenClasses.Boundary.Output</ClassMask>
         <FunctionMask>*</FunctionMask>
       </FilterEntry>
