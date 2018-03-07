@@ -201,6 +201,25 @@ namespace Microwave.Test.Unit
         }
 
         [Test]
+        public void Ready_FullPower_CookerIsCalledCorrectly()
+        {
+            for (int i = 50; i <= 700; i += 50)
+            {
+                powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            }
+
+            timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            // Now in SetTime
+
+            // Should call with correct values
+            startCancelButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+            cooker.Received(1).StartCooking(700, 60);
+
+        }
+
+
+        [Test]
         public void SetTime_StartButton_LightIsCalled()
         {
             powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
