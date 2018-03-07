@@ -9,8 +9,6 @@ namespace MicrowaveOvenClasses.Boundary
 
         public event EventHandler Expired;
         public event EventHandler TimerTick;
-        public event EventHandler TimerOn;
-        public event EventHandler TimerOff;
 
         private System.Timers.Timer timer;
 
@@ -28,23 +26,20 @@ namespace MicrowaveOvenClasses.Boundary
         {
             TimeRemaining = time;
             timer.Enabled = true;
-            TimerOn?.Invoke(this, new System.EventArgs());
         }
 
         public void Stop()
         {
             timer.Enabled = false;
-            TimerOff?.Invoke(this, new System.EventArgs());
         }
 
-        public void Expire()
+        private void Expire()
         {
             timer.Enabled = false;
-            TimerOff?.Invoke(this, System.EventArgs.Empty);
             Expired?.Invoke(this, System.EventArgs.Empty);
         }
 
-        public void OnTimerEvent(object sender, System.Timers.ElapsedEventArgs args)
+        private void OnTimerEvent(object sender, System.Timers.ElapsedEventArgs args)
         {
             // One tick has passed
             // Do what I should

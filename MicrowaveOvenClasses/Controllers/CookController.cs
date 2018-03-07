@@ -24,13 +24,14 @@ namespace MicrowaveOvenClasses.Controllers
             myUI = ui;
 
             timer.Expired += new EventHandler(OnTimerExpired);
+            timer.TimerTick += new EventHandler(OnTimerTick);
         }
 
         public void StartCooking(int power, int time)
         {
             myPowerTube.TurnOn(power);
             myTimer.Start(time);
-            
+            isCooking = true;
         }
 
         public void Stop()

@@ -11,8 +11,6 @@ namespace MicrowaveOvenClasses.Interfaces
     {
         int TimeRemaining { get; }
         event EventHandler Expired;
-        event EventHandler TimerOn;
-        event EventHandler TimerOff;
         event EventHandler TimerTick;
 
         void Start(int time);

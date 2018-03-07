@@ -53,12 +53,6 @@ namespace MicrowaveOvenClasses.Controllers
                     powerLevel = (powerLevel >= 700 ? 50 : powerLevel+50);
                     myDisplay.ShowPower(powerLevel);
                     break;
-                case States.SETTIME:
-                    break;
-                case States.COOKING:
-                    break;
-                case States.DOOROPEN:
-                    break;
             }
         }
 
@@ -66,8 +60,6 @@ namespace MicrowaveOvenClasses.Controllers
         {
             switch (myState)
             {
-                case States.READY:
-                    break;
                 case States.SETPOWER:
                     myDisplay.ShowTime(time, 0);
                     myState = States.SETTIME;
@@ -76,10 +68,6 @@ namespace MicrowaveOvenClasses.Controllers
                     time += 1;
                     myDisplay.ShowTime(time, 0);
                     break;
-                case States.COOKING:
-                    break;
-                case States.DOOROPEN:
-                    break;
             }
         }
 
@@ -87,15 +75,16 @@ namespace MicrowaveOvenClasses.Controllers
         {
             switch (myState)
             {
-                case States.READY:
-                    break;
                 case States.SETPOWER:
                     powerLevel = 50;
+                    time = 1;
+                    myLight.TurnOff();
                     myDisplay.Clear();
                     myState = States.READY;
                     break;
                 case States.SETTIME:
                     myDisplay.Clear();
+                    myLight.TurnOn();
                     myCooker.StartCooking(powerLevel, time*60);
                     myState = States.COOKING;
                     break;
@@ -103,10 +92,9 @@ namespace MicrowaveOvenClasses.Controllers
                     powerLevel = 50;
                     time = 1;
                     myCooker.Stop();
+                    myLight.TurnOff();
                     myDisplay.Clear();
                     myState = States.READY;
-                    break;
-                case States.DOOROPEN:
                     break;
             }
         }
@@ -122,22 +110,21 @@ namespace MicrowaveOvenClasses.Controllers
                 case States.SETPOWER:
                     powerLevel = 50;
                     myLight.TurnOn();
+                    myDisplay.Clear();
                     myState = States.DOOROPEN;
                     break;
                 case States.SETTIME:
                     powerLevel = 50;
                     time = 1;
                     myLight.TurnOn();
+                    myDisplay.Clear();
                     myState = States.DOOROPEN;
                     break;
                 case States.COOKING:
                     myCooker.Stop();
                     powerLevel = 50;
                     time = 1;
-                    myLight.TurnOn();
                     myState = States.DOOROPEN;
-                    break;
-                case States.DOOROPEN:
                     break;
             }
         }
@@ -146,14 +133,6 @@ namespace MicrowaveOvenClasses.Controllers
         {
             switch (myState)
             {
-                case States.READY:
-                    break;
-                case States.SETPOWER:
-                    break;
-                case States.SETTIME:
-                    break;
-                case States.COOKING:
-                    break;
                 case States.DOOROPEN:
                     myLight.TurnOff();
                     myState = States.READY;
@@ -165,20 +144,13 @@ namespace MicrowaveOvenClasses.Controllers
         {
             switch (myState)
             {
-                case States.READY:
-                    break;
-                case States.SETPOWER:
-                    break;
-                case States.SETTIME:
-                    break;
                 case States.COOKING:
                     powerLevel = 50;
                     time = 1;
                     myDisplay.Clear();
+                    myLight.TurnOff();
                     // Beep 3 times
                     myState = States.READY;
-                    break;
-                case States.DOOROPEN:
                     break;
             }
         }

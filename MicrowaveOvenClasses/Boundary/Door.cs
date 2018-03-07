@@ -21,6 +21,5 @@ namespace MicrowaveOvenClasses.Boundary
         {
             Opened?.Invoke(this, System.EventArgs.Empty);
         }
-
     }
 }
