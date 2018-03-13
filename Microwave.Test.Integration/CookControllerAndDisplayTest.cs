@@ -49,5 +49,15 @@ namespace Microwave.Test.Integration
 
             iut_cooker = new CookController(timer, display, powerTube, iut_ui);
         }
+
+        [Test]
+        public void Cooking_TimerExpired_UICalled()
+        {
+            iut_cooker.StartCooking(50, 60);
+
+            timer.Expired += Raise.EventWith(this, EventArgs.Empty);
+
+            iut_ui.Received().CookingIsDone();
+        }
     }
 }
