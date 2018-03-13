@@ -40,6 +40,8 @@ namespace Microwave.Test.Integration
             _timer = Substitute.For<ITimer>();
             _powerTube = Substitute.For<IPowerTube>();
 
+            _uut_cooker = new CookController(_timer, _display, _powerTube);
+
             _uut_ui = new UserInterface(
                 _powerButton, _timeButton, _startCancelButton,
                 _door,
@@ -47,7 +49,9 @@ namespace Microwave.Test.Integration
                 _light,
                 _uut_cooker);
 
-            _uut_cooker = new CookController(_timer, _display, _powerTube, _uut_ui);
+            _uut_cooker.UI = _uut_ui;
+
+
         }
 
         [Test]
@@ -57,7 +61,6 @@ namespace Microwave.Test.Integration
             // Is this the correct way to drive the uut? We are using the mocks to drive right now!?
             _powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
             _timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
-
             _startCancelButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
 
             // Is this OK? Or how else can we Assert that StartCooking is called on CookController
