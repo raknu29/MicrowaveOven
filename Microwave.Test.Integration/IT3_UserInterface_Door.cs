@@ -45,8 +45,8 @@ namespace Microwave.Test.Integration
 
             // Included
             _uut_door = new Door();
+            _uut_display = new Display(_output);
             _uut_cooker = new CookController(_timer, _uut_display, _powerTube);
-            _uut_display = Substitute.For<IDisplay>();
 
             _uut_ui = new UserInterface(
                 _powerButton, _timeButton, _startCancelButton,
@@ -69,6 +69,14 @@ namespace Microwave.Test.Integration
 
             _uut_door.Open();
             _output.Received().OutputLine(Arg.Is<string>(str => str.Contains("Display cleared")));
+        }
+
+        [Test]
+        public void Close_DoorIsOpen_LightTurnsOff()
+        {
+            _uut_door.Open();
+            _uut_door.Close();
+            _light.Received().TurnOff();
         }
     }
 }
