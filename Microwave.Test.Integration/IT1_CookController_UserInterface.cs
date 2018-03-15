@@ -66,5 +66,34 @@ namespace Microwave.Test.Integration
             // Is this OK? Or how else can we Assert that StartCooking is called on CookController
             _powerTube.Received(1).TurnOn(50);
         }
+
+        [Test]
+        public void OnStartCancelPressed_StateIsCooking_CookControllerStopsCooking()
+        {
+            // "Press" powerbutton --> raise event --> set state to SETPOWER for the UserInterface uut
+            // Is this the correct way to drive the uut? We are using the mocks to drive right now!?
+            _powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            _timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            _startCancelButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            _startCancelButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+            // Is this OK? Or how else can we Assert that Stop is called on CookController
+            _powerTube.Received(1).TurnOff();
+        }
+
+        [Test]
+        public void OnTimerExpired_StateIsCooking_UICookingIsDoneIsCalled()
+        {
+            // "Press" powerbutton --> raise event --> set state to SETPOWER for the UserInterface uut
+            // Is this the correct way to drive the uut? We are using the mocks to drive right now!?
+            _powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            _timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            _startCancelButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+            _timer.Expired += Raise.EventWith(this, EventArgs.Empty);
+
+            _light.Received(1).TurnOff();
+        }
+
     }
 }
