@@ -12,31 +12,31 @@ using NUnit.Framework;
 namespace Microwave.Test.Integration
 {
     [TestFixture]
-    public class IT5_UserInterface_Buttons
+    public class IT7_CookController_Timer
     {
+        private ITimer _uut_timer;
+
+        private IPowerTube _uut_powerTube;
         private IButton _uut_powerButton;
         private IButton _uut_timeButton;
         private IButton _uut_startCancelButton;
-
         private ILight _uut_light;
         private IDoor _uut_door;
         private IDisplay _uut_display;
         private CookController _uut_cooker;
         private IUserInterface _uut_ui;
 
-        private ITimer _timer;
-
-        private IPowerTube _powerTube;
-
         private IOutput _output;
 
         [SetUp]
         public void Setup()
         {
-            _timer = Substitute.For<ITimer>();
-            _powerTube = Substitute.For<IPowerTube>();
 
             _output = Substitute.For<IOutput>();
+
+            _uut_timer = new Timer();
+
+            _uut_powerTube = new PowerTube(_output);
 
             _uut_powerButton = new Button();
             _uut_timeButton = new Button();
@@ -48,7 +48,7 @@ namespace Microwave.Test.Integration
 
             _uut_display = new Display(_output);
 
-            _uut_cooker = new CookController(_timer, _uut_display, _powerTube);
+            _uut_cooker = new CookController(_uut_timer, _uut_display, _uut_powerTube);
 
             _uut_ui = new UserInterface(
                 _uut_powerButton, _uut_timeButton, _uut_startCancelButton,
@@ -59,31 +59,5 @@ namespace Microwave.Test.Integration
 
             _uut_cooker.UI = _uut_ui;
         }
-
-        [Test]
-        public void Press_StateIsReadyPressPowerButton_DisplayShowPowerIsCalled()
-        {
-            _uut_powerButton.Press();
-
-            _output.Received(1).OutputLine(Arg.Is<string>(str => str.Contains("50 W")));
-        }
-
-        [Test]
-        public void Press_StateIsSetPowerPressTimeButton_DisplayShowTimeIsCalled()
-        {
-            _uut_powerButton.Press();
-            _uut_timeButton.Press();
-
-            _output.Received(1).OutputLine(Arg.Is<string>(str => str.Contains("01:00")));
-        }
-
-        [Test]
-        public void Press_StateIsSetPowerPressStartCancelButton_DisplayClear()
-        {
-            _uut_powerButton.Press();
-            _uut_startCancelButton.Press();
-            _output.Received(1).OutputLine(Arg.Is<string>(str => str.Contains("Display cleared")));
-        }
-
     }
 }
