@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IT1_CookController_UserInterface.cs" />
+    <Compile Include="IT3_UserInterface_Door.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -64,6 +65,9 @@
       <Project>{2b04da6b-afe9-4548-aa05-84d806ba0fa4}</Project>
       <Name>MicrowaveOvenClasses</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
