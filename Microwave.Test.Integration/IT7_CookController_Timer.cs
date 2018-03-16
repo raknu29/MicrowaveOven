@@ -9,6 +9,9 @@ using MicrowaveOvenClasses.Boundary;
 using NSubstitute;
 using NUnit.Framework;
 
+using System.Threading;
+
+
 namespace Microwave.Test.Integration
 {
     [TestFixture]
@@ -34,7 +37,7 @@ namespace Microwave.Test.Integration
 
             _output = Substitute.For<IOutput>();
 
-            _uut_timer = new Timer();
+            _uut_timer = new MicrowaveOvenClasses.Boundary.Timer();
 
             _uut_powerTube = new PowerTube(_output);
 
@@ -58,6 +61,24 @@ namespace Microwave.Test.Integration
                 _uut_cooker);
 
             _uut_cooker.UI = _uut_ui;
+        }
+
+        [Test]
+        public void Start_TimerTick_ShortEnough()
+        {
+            ManualResetEvent pause = new ManualResetEvent(false);
+
+            _uut_powerButton.Press();
+            _uut_timeButton.Press();
+            _uut_startCancelButton.Press();
+
+            _uut_timer.TimerTick += (sender, args) => pause.Set();
+
+            pause.WaitOne();
+
+            _output.Received().OutputLine(Arg.Is<string>(str => str.Contains("PowerTube turned off")));
+
+            
         }
     }
 }
