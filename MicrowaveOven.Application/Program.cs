@@ -53,6 +53,8 @@ namespace MicrowaveOven.Application
             //     with 01:00.Each press increases the selected time with one minute.
             System.Console.WriteLine("User: Press time button");
             timeButton.Press();
+            timeButton.Press();
+            timeButton.Press();
             // 8. The user presses the Start-Cancel button.
             System.Console.WriteLine("User: Press startCancel Button");
             startCancelButton.Press();
@@ -76,7 +78,7 @@ namespace MicrowaveOven.Application
             // 19. The light inside the oven goes off.
 
             // Wait while the classes, including the timer, do their job
-            System.Console.WriteLine("Tast enter når applikationen skal afsluttes");
+            //System.Console.WriteLine("Tast enter når applikationen skal afsluttes");
             System.Console.ReadLine();
         }
     }
