@@ -43,7 +43,7 @@ namespace MicrowaveOvenClasses.Boundary
         {
             // One tick has passed
             // Do what I should
-            TimeRemaining -= 1;
+            TimeRemaining -= 1000;
             
 
             if (TimeRemaining <= 0)

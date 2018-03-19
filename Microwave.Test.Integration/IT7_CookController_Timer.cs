@@ -64,7 +64,7 @@ namespace Microwave.Test.Integration
         }
 
         [Test]
-        public void Start_TimerTick_ShortEnough()
+        public void OnTimerEvent_waitToFinish_powerTubeTurnsOff()
         {
             ManualResetEvent pause = new ManualResetEvent(false);
 
